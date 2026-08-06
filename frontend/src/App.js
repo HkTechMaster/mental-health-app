@@ -3,12 +3,14 @@ import Login from './Login';
 import Signup from './Signup';
 import ForgotPassword from './ForgotPassword';
 import Chat from './Chat';
+import Dashboard from './Dashboard';
 import './App.css';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [showSignup, setShowSignup] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(false);
 
   function renderAuthScreen() {
     if (showForgotPassword) {
@@ -26,9 +28,16 @@ function App() {
     );
   }
 
+  function renderLoggedInScreen() {
+    if (showDashboard) {
+      return <Dashboard setShowDashboard={setShowDashboard} />;
+    }
+    return <Chat setToken={setToken} setShowDashboard={setShowDashboard} />;
+  }
+
   return (
     <div>
-      {!token ? renderAuthScreen() : <Chat setToken={setToken} />}
+      {!token ? renderAuthScreen() : renderLoggedInScreen()}
     </div>
   );
 }

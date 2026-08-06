@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
-function Chat({ setToken }) {
+function Chat({ setToken, setShowDashboard }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [ending, setEnding] = useState(false);
+  const messagesRef = useRef(messages);
+
+  // messagesRef ko hamesha latest rakho (beforeunload ke liye zaroori)
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   function handleLogout() {
     localStorage.removeItem('token');
@@ -12,22 +19,68 @@ function Chat({ setToken }) {
   }
 
   async function sendMessage() {
-    if (!input.trim() || loading) return;
+  if (!input.trim() || loading) return;
 
-    const userMessage = { sender: 'user', text: input };
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
-    setLoading(true);
+  const userMessage = { sender: 'user', text: input };
+  setMessages(prev => [...prev, userMessage]);
+  setInput('');
+  setLoading(true);
 
+  try {
+    const token = localStorage.getItem('token');
+    const res = await axios.post(
+      'http://localhost:5000/api/chat',
+      { message: userMessage.text },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    setMessages(prev => [...prev, { sender: 'bot', text: res.data.reply }]);
+  } catch (err) {
+    setMessages(prev => [...prev, { sender: 'bot', text: 'Something went wrong. Please try again in a moment.' }]);
+  } finally {
+    setLoading(false);
+  }
+}
+
+  async function endSession() {
+    if (messages.length < 2) {
+      alert("Have a short conversation first, then end the session.");
+      return;
+    }
+    setEnding(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/chat', { message: userMessage.text });
-      setMessages(prev => [...prev, { sender: 'bot', text: res.data.reply }]);
+      const token = localStorage.getItem('token');
+      await axios.post(
+        'http://localhost:5000/api/swot/generate',
+        { messages },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setMessages([]);
+      alert("Session ended. Your insights have been saved to your dashboard.");
     } catch (err) {
-      setMessages(prev => [...prev, { sender: 'bot', text: 'Something went wrong. Please try again in a moment.' }]);
+      alert("Could not save session insights. Please try again.");
     } finally {
-      setLoading(false);
+      setEnding(false);
     }
   }
+
+  // Agar user tab band kare ya website chhode, bina button dabaye,
+  // sendBeacon se background mein SWOT trigger karo
+  useEffect(() => {
+    function handleBeforeUnload() {
+      const currentMessages = messagesRef.current;
+      if (currentMessages.length < 2) return;
+
+      const token = localStorage.getItem('token');
+
+      navigator.sendBeacon(
+        'http://localhost:5000/api/swot/generate-beacon',
+        new Blob([JSON.stringify({ token, messages: currentMessages })], { type: 'application/json' })
+      );
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
 
   return (
     <div className="chat-page">
@@ -36,7 +89,13 @@ function Chat({ setToken }) {
           <span className="breathing-dot"></span>
           Solace
         </div>
-        <button className="btn-logout" onClick={handleLogout}>Sign out</button>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button className="btn-logout" onClick={() => setShowDashboard(true)}>Dashboard</button>
+          <button className="btn-logout" onClick={endSession} disabled={ending}>
+            {ending ? 'Ending...' : 'End Session'}
+          </button>
+          <button className="btn-logout" onClick={handleLogout}>Sign out</button>
+        </div>
       </div>
 
       <div className="chat-body">

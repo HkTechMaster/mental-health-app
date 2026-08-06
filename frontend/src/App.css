@@ -311,3 +311,139 @@ body {
   background: var(--border);
   cursor: not-allowed;
 }
+
+/* ---------- Dashboard ---------- */
+.dashboard-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-body {
+  flex: 1;
+  padding: 32px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dashboard-title {
+  font-family: 'Lora', serif;
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.dashboard-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 28px;
+}
+
+.dashboard-empty {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 40px;
+}
+
+.swot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.swot-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.swot-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.mood-badge {
+  background: rgba(47, 93, 90, 0.1);
+  color: var(--primary-dark);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.swot-summary {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.swot-section {
+  margin-bottom: 18px;
+}
+
+.swot-section h4 {
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.swot-section ul {
+  padding-left: 18px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.swot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.swot-box {
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.swot-box h4 {
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.swot-box ul {
+  padding-left: 16px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.swot-box.strength h4 { color: #2F5D5A; }
+.swot-box.weakness h4 { color: #B4544A; }
+.swot-box.opportunity h4 { color: #C99A5B; }
+.swot-box.threat h4 { color: #7A5A9E; }
+
+.topic-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.topic-tag {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 0.78rem;
+}
