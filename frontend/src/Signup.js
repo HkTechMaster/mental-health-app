@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from './config';
 
 function Signup({ setShowSignup }) {
   const [name, setName] = useState('');
@@ -18,7 +19,7 @@ function Signup({ setShowSignup }) {
     }
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/signup', { name, email, password });
+      await axios.post(`${API_BASE_URL}/api/auth/signup`, { name, email, password });
       setSuccess('Account created. You can now sign in.');
       setTimeout(() => setShowSignup(false), 1200);
     } catch (err) {

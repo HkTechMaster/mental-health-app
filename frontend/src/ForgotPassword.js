@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from './config';
 
 function ForgotPassword({ setShowForgotPassword }) {
   const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ function ForgotPassword({ setShowForgotPassword }) {
     }
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/forgot-password', { email, newPassword });
+      await axios.post(`${API_BASE_URL}/api/auth/forgot-password`, { email, newPassword });
       setSuccess('Password updated. You can now sign in.');
       setTimeout(() => setShowForgotPassword(false), 1200);
     } catch (err) {

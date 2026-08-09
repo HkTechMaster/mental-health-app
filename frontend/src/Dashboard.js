@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
+import API_BASE_URL from './config';
 
 function Dashboard({ setToken, currentPage, setCurrentPage }) {
     const [history, setHistory] = useState([]);
@@ -16,7 +17,7 @@ function Dashboard({ setToken, currentPage, setCurrentPage }) {
         setError('');
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5000/api/swot/history', {
+            const res = await axios.get(`${API_BASE_URL}/api/swot/history`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setHistory(res.data);

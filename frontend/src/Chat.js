@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
+import API_BASE_URL from './config';
 
 function Chat({ setToken, currentPage, setCurrentPage }) {
   const [messages, setMessages] = useState([]);
@@ -30,7 +31,7 @@ function Chat({ setToken, currentPage, setCurrentPage }) {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.post(
-        'http://localhost:5000/api/chat',
+        `${API_BASE_URL}/api/chat`,
         { message: userMessage.text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -51,7 +52,7 @@ function Chat({ setToken, currentPage, setCurrentPage }) {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        'http://localhost:5000/api/swot/generate',
+        `${API_BASE_URL}/api/swot/generate`,
         { messages },
         { headers: { Authorization: `Bearer ${token}` } }
       );

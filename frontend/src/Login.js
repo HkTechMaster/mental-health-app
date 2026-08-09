@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from './config';
 
 function Login({ setToken, setShowSignup, setShowForgotPassword }) {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ function Login({ setToken, setShowSignup, setShowForgotPassword }) {
     }
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const res = await axios.post(`${API_BASE_URL}/api/auth/login`, { email, password });
       localStorage.setItem('token', res.data.token);
       setToken(res.data.token);
     } catch (err) {
