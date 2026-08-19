@@ -34,7 +34,7 @@ function Signup({ setShowSignup }) {
       <div className="auth-card">
         <div className="brand">
           <span className="breathing-dot"></span>
-          Solace
+          Manochikitsak
         </div>
         <h1 className="auth-heading">Create your account</h1>
         <p className="auth-subtext">Start your first conversation with Solace.</p>

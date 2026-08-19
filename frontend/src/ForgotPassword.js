@@ -33,7 +33,7 @@ function ForgotPassword({ setShowForgotPassword }) {
       <div className="auth-card">
         <div className="brand">
           <span className="breathing-dot"></span>
-          Solace
+          Manochikitsak
         </div>
         <h1 className="auth-heading">Reset your password</h1>
         <p className="auth-subtext">Enter your email and choose a new password.</p>

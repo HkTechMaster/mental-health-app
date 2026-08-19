@@ -31,7 +31,7 @@ function Login({ setToken, setShowSignup, setShowForgotPassword }) {
       <div className="auth-card">
         <div className="brand">
           <span className="breathing-dot"></span>
-          Solace
+          Manochikitsak
         </div>
         <h1 className="auth-heading">Welcome back</h1>
         <p className="auth-subtext">Sign in to continue your conversation.</p>
