@@ -101,7 +101,7 @@ function Chat({ setToken, currentPage, setCurrentPage }) {
             <div className="chat-empty">
               <div className="brand">
                 <span className="breathing-dot"></span>
-                Solace
+                Manochikitsak
               </div>
               <p>This is a quiet space to share what's on your mind. Type a message to begin.</p>
             </div>
@@ -116,7 +116,7 @@ function Chat({ setToken, currentPage, setCurrentPage }) {
 
           {loading && (
             <div className="msg-row bot thinking">
-              <span className="msg-label">Solace</span>
+              <span className="msg-label">Manochikitsak</span>
               <div className="msg-bubble">Thinking...</div>
             </div>
           )}
